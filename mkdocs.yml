@@ -1,0 +1,165 @@
+# ============================================================
+# MkDocs Offline Documentation Configuration
+# ============================================================
+
+site_name: My Docs
+site_description: Personal offline documentation
+site_author: Your Name
+
+
+# ============================================================
+# Theme
+# ============================================================
+
+theme:
+  name: material
+
+  # Offline: do not load Google Fonts
+  font: false
+
+  language: en
+
+  # Manual light / dark switch
+  palette:
+
+    # Light mode
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+
+    # Dark mode
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+
+  # Keep only lightweight features
+  features:
+
+    # Follow current heading in TOC
+    - toc.follow
+
+
+# ============================================================
+# Navigation
+# ============================================================
+
+nav:
+
+  - Home: index.md
+  - Template: template.md
+  - Principle:
+    - foundation: Principle/foundation.md
+    - Principle: Principle/Principle.md
+  - Yocto UDM:
+    - Day 01 — Embedded Linux and Yocto Introduction: Yocto/YoctoUDM/day01_embedded_linux_and_yocto_intro.md
+    - Day 02 — Yocto Terminology and Build Directory: Yocto/YoctoUDM/day02_yocto_terminology_and_build_dir.md
+    - Day 03 — BeagleBone Black and Booting: Yocto/YoctoUDM/day03_beaglebone_black_and_booting.md
+    - Day 04 — Yocto Releases and meta-ti BSP Layer: Yocto/YoctoUDM/day04_yocto_releases_and_meta_ti.md
+    - Day 05 — Raspberry Pi Support: Yocto/YoctoUDM/day05_raspberry_pi_support.md
+    - Day 06 — BitBake Operators and Layer Creation: Yocto/YoctoUDM/day06_bitbake_operators_and_layers.md
+    - Day 07 — Image Customization and Features: Yocto/YoctoUDM/day07_image_customization_and_features.md
+    - Day 08 — Recipe Fundamentals and C Programming: Yocto/YoctoUDM/day08_recipe_fundamentals_and_c.md
+    - Day 09 — Build Logs and Advanced Recipes: Yocto/YoctoUDM/day09_build_logs_and_advanced_recipes.md
+    - Day 10 — Git Integration in Recipes: Yocto/YoctoUDM/day10_git_integration_in_recipes.md
+
+
+
+# ============================================================
+# Extra CSS
+# ============================================================
+
+extra_css:
+
+  - css/extra.css
+
+
+
+# ============================================================
+# Markdown Extensions
+# ============================================================
+
+markdown_extensions:
+
+  # Table of contents
+  - toc:
+      permalink: "¶"
+      toc_depth: 3
+
+
+  # Attributes
+  - attr_list
+
+
+  # Definition lists
+  - def_list
+
+
+  # Tables
+  - tables
+
+
+  # Code blocks
+  # Use simple configuration for stability
+  - pymdownx.highlight:
+      use_pygments: false
+
+
+  # Nested code blocks
+  - pymdownx.superfences
+
+  # Nested lists and extra syntax
+  - pymdownx.keys
+
+  # Nested lists support
+  - pymdownx.caret
+
+  # Nested lists and extra syntax
+  - pymdownx.extra
+
+
+  # Admonitions:
+  # !!! note
+  #     text
+  - admonition
+
+
+  # Task lists
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+
+
+# ============================================================
+# Plugins
+# ============================================================
+
+plugins:
+
+  # Offline local search
+  - search
+  - mkdocs-pdf
+
+
+
+# ============================================================
+# Development
+# ============================================================
+
+watch:
+
+  - docs
+
+
+
+# ============================================================
+# Build
+# ============================================================
+
+strict: false

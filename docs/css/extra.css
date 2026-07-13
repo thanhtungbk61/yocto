@@ -1,0 +1,51 @@
+/* ===================================
+   Offline MkDocs style adjustments
+   =================================== */
+
+
+/* Make Material code blocks closer
+   to the classic MkDocs theme */
+
+.highlight {
+    border: 1px solid #d5d5d5;
+    border-radius: 4px;
+    background: #f8f8f8;
+}
+
+
+.highlight pre {
+    margin: 0;
+    padding: 1rem;
+}
+
+
+.highlight code {
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+
+/* Better readable text width */
+
+.md-content {
+    max-width: 900px;
+}
+
+
+/* Use local fonts */
+
+body {
+    font-family:
+        "Segoe UI",
+        "Arial",
+        sans-serif;
+}
+
+
+code,
+pre {
+    font-family:
+        "Cascadia Code",
+        "Consolas",
+        monospace;
+}

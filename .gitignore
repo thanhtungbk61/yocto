@@ -1,0 +1,31 @@
+# MkDocs Build Artifacts
+/site/
+
+# Python Virtual Environments
+/env
+/venv
+/ENV
+.venv
+env/
+venv/
+
+# Local Server/IDE specific files
+.cache
+.mc-cache/
+site/
+mkdocs.local.yml
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE and Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS specific files
+.DS_Store
+Thumbs.db
