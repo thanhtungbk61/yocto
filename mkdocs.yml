@@ -69,7 +69,7 @@ nav:
     - Day 09 — Build Logs and Advanced Recipes: Yocto/YoctoUDM/day09_build_logs_and_advanced_recipes.md
     - Day 10 — Git Integration in Recipes: Yocto/YoctoUDM/day10_git_integration_in_recipes.md
   - bootlin:
-    - source - bootlin: bootlin/source-bootlin.md
+    - source - bootlin: bootlin/source.md
 
 
 # ============================================================
