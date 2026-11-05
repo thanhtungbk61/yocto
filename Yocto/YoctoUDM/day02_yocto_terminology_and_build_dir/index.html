@@ -1,0 +1,1663 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Personal offline documentation">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+      
+        <link rel="prev" href="../day01_embedded_linux_and_yocto_intro/">
+      
+      
+        <link rel="next" href="../day03_beaglebone_black_and_booting/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Day 02 — Yocto Terminology and Build Directory - My Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#day-02-yocto-terminology-and-build-directory" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="My Docs" class="md-header__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Day 02 — Yocto Terminology and Build Directory
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="My Docs" class="md-nav__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    My Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Template
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Principle
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Principle
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Principle/foundation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    foundation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Principle/Principle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Principle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Yocto UDM
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Yocto UDM
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day01_embedded_linux_and_yocto_intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 01 — Embedded Linux and Yocto Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 02 — Yocto Terminology and Build Directory
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 02 — Yocto Terminology and Build Directory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#yocto-terminology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Yocto Terminology
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Yocto Terminology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#metadata-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metadata Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipes-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipes Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Class Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layers-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layers Concept
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layers-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layers Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compatible-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compatible Layers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Image Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#packages-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Packages Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poky-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poky Source
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Poky Source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#poky-source-treeub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poky Source Treeub
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-dir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build Dir
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Build Dir">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conf
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#others" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Others
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build Workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#images" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Images
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#savedisk-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Savedisk Space
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Challenge
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day03_beaglebone_black_and_booting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 03 — BeagleBone Black and Booting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day04_yocto_releases_and_meta_ti/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 04 — Yocto Releases and meta-ti BSP Layer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day05_raspberry_pi_support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 05 — Raspberry Pi Support
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day06_bitbake_operators_and_layers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 06 — BitBake Operators and Layer Creation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day07_image_customization_and_features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 07 — Image Customization and Features
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day08_recipe_fundamentals_and_c/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 08 — Recipe Fundamentals and C Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day09_build_logs_and_advanced_recipes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 09 — Build Logs and Advanced Recipes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day10_git_integration_in_recipes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 10 — Git Integration in Recipes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    bootlin
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    bootlin
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bootlin/source/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    source - bootlin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#yocto-terminology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Yocto Terminology
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Yocto Terminology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#metadata-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metadata Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipes-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipes Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Class Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layers-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layers Concept
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layers-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layers Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compatible-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compatible Layers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Image Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#packages-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Packages Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poky-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poky Source
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Poky Source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#poky-source-treeub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poky Source Treeub
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-dir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build Dir
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Build Dir">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conf
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#others" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Others
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build Workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#images" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Images
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#savedisk-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Savedisk Space
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Challenge
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<div><h1 id="day-02-yocto-terminology-and-build-directory">Day 02 — Yocto Terminology and Build Directory<a class="headerlink" href="#day-02-yocto-terminology-and-build-directory" title="Permanent link">¶</a></h1>
+<h2 id="yocto-terminology">Yocto Terminology<a class="headerlink" href="#yocto-terminology" title="Permanent link">¶</a></h2>
+<h3 id="metadata-overview">Metadata Overview<a class="headerlink" href="#metadata-overview" title="Permanent link">¶</a></h3>
+<p>Metadata</p>
+<p>Poky = Bitbake + Metadata</p>
+<p>Metadata is collection of
+    • Configuration files (.conf)
+    • Recipes (.bb and .bbappend)
+    • Classes (.bbclass)
+    • Includes (.inc)</p>
+<h3 id="recipes-definition">Recipes Definition<a class="headerlink" href="#recipes-definition" title="Permanent link">¶</a></h3>
+<p>Recipes</p>
+<p>Non-Yocto: A recipe is a set of instructions that describe how to prepare or make something, especially a dish</p>
+<p>Yocto: A recipe is a set of instructions that is read and processed by the bitbake</p>
+<p>Extension of Recipe: .bb</p>
+<p>A recipe describes:
+    where you get source code
+    which patches to apply
+    Configuration options
+    Compile options (library dependencies)
+    Install
+    License</p>
+<p>a software component</p>
+<p>Examples of Recipes</p>
+<p>dhcp_4.4.1.bb
+gstreamer1.0_1.16.1.bb</p>
+<h3 id="configuration-files">Configuration Files<a class="headerlink" href="#configuration-files" title="Permanent link">¶</a></h3>
+<p>Configuration Files</p>
+<p>Files which hold
+    global definition of variables
+    user defined variables and
+    hardware configuration information</p>
+<p>They tell the build system what to build and put into the image to support a particular platform</p>
+<p>Extension: .conf</p>
+<p>Types</p>
+<pre class="highlight"><code>• Machine Configuration Options
+• Distribution Configuration Options
+• Compiler tuning options
+• General Common Configuration Options
+• User Configuration Options (local.conf)</code></pre>
+<h3 id="class-files">Class Files<a class="headerlink" href="#class-files" title="Permanent link">¶</a></h3>
+<p>classes</p>
+<p>Class files are used to abstract common functionality and share it amongst multiple recipe (.bb) files</p>
+<p>To use a class file, you simply make sure the recipe inherits the class</p>
+<p>Eg. inherit classname</p>
+<p>Extension: .bbclass</p>
+<p>They are usually placed in classes directory inside the meta* directory</p>
+<p>Example of classes</p>
+<p>cmake.bbclass - Handles cmake in recipes
+kernel.bbclass - Handles building kernels. Contains code to build all kernel trees
+module.bbclass - Provides support for building out-of-tree Linux Kernel Modules</p>
+<h3 id="layers-concept">Layers Concept<a class="headerlink" href="#layers-concept" title="Permanent link">¶</a></h3>
+<p>Layers</p>
+<p>A collection of related recipes.</p>
+<p>or</p>
+<p>Layers are recipe containers (folders)</p>
+<p>Typical naming convention: meta-<layername></layername></p>
+<p>Poky has the following layers:</p>
+<p>meta, meta-poky, meta-selftest, meta-skeleton, meta-yocto-bsp</p>
+<p>Why Layers</p>
+<p>Layers provide a mechanism to isolate meta data according to functionality, for instance BSPs, distribution configuration, etc.</p>
+<p>You could have a BSP layer, a GUI layer, a distro configuration, middleware, or an application</p>
+<p>Putting your entire build into one layer limits and complicates future customization and reuse. </p>
+<p>Example: meta-poky          -- Distro metadata
+         meta-yocto-bsp     -- BSP    metadata</p>
+<p>Layers allow to easily to add entire sets of meta data and/or replace sets with other sets.
+meta-poky, is itself a layer applied on top of the OE-Core metadata layer, meta</p>
+<h3 id="layers-management">Layers Management<a class="headerlink" href="#layers-management" title="Permanent link">¶</a></h3>
+<p>Layers</p>
+<p>Which layers are used by Poky build system?</p>
+<p>BBLAYERS variable present in build/conf/bblayers.conf file list the layers Bitbake tries to find</p>
+<p>If bblayers.conf is not present when you start the build, the OpenEmbedded build system creates it from bblayers.conf.sample 
+when you source the oe-init-build-env script</p>
+<p>Command to find out which layers are present</p>
+<p>$ bitbake-layers show-layers</p>
+<p>Note: You can include any number of available layers from the Yocto Project </p>
+<p>Where to get other layers</p>
+<p>https://layers.openembedded.org/layerindex/branch/master/layers/</p>
+<h3 id="compatible-layers">Compatible Layers<a class="headerlink" href="#compatible-layers" title="Permanent link">¶</a></h3>
+<p>Yocto Project Compatible Layers</p>
+<p>https://www.yoctoproject.org/software-overview/layers/</p>
+<p>These layers are tested and are fully compatible with yocto project.</p>
+<p>OpenEmbedded layer index contains more layers but the content is less universally validated</p>
+<p><img alt="yoctoproject_compatible.png" src="day02_yocto_terminology_and_build_dir/0_yocto_terminology/07_compatible_layers/yoctoproject_compatible.png"></p>
+<h3 id="image-definition">Image Definition<a class="headerlink" href="#image-definition" title="Permanent link">¶</a></h3>
+<p>Image</p>
+<p>An image is the top level recipe, it has a description, a license and inherits the core-image class</p>
+<p>It is used alongside the machine definition</p>
+<p>machine describes the hardware used and its capabilities</p>
+<p>image is architecture agnostic and defines how the root filesystem is built, with what packages.</p>
+<p>By default, several images are provided in Poky</p>
+<p>Command to check the list of available image recipes</p>
+<p>$ ls meta*/recipes*/images/*.bb</p>
+<h3 id="packages-definition">Packages Definition<a class="headerlink" href="#packages-definition" title="Permanent link">¶</a></h3>
+<p>Packages</p>
+<p>Non-Yocto: Any wrapped or boxed object or group of objects.</p>
+<p>Yocto: A package is a binary file with name *.rpm, *.deb, or *.ipkg</p>
+<p>A single recipe produces many packages. All packages that a recipe generated are listed in the recipe variable</p>
+<p>$ vi  meta/recipes-multimedia/libtiff/tiff_4.0.10.bb
+PACKAGES =+ "tiffxx tiff-utils"</p>
+<hr>
+<h2 id="poky-source">Poky Source<a class="headerlink" href="#poky-source" title="Permanent link">¶</a></h2>
+<h3 id="poky-source-treeub">Poky Source Treeub<a class="headerlink" href="#poky-source-treeub" title="Permanent link">¶</a></h3>
+<p>Poky source tree</p>
+<p>bitbake     -   Holds all Python scripts used by the bitbake command
+            bitbake/bin is placed into the PATH environmental variable so bitbake can be found</p>
+<p>documentation   -       All documentation sources for the Yocto Project documentation
+            Can be used to generate nice PDFs</p>
+<p>meta        -   Contains the oe-core metadata</p>
+<p>meta-poky   -   Holds the configuration for the Poky reference distribution
+            local.conf.sample, bblayers.conf.sample are present here</p>
+<p>meta-skeleton   -   Contains template recipes for BSP and kernel development</p>
+<p>meta-yocto-bsp  -   Maintains several BSPs such as the Beaglebone, EdgeRouter, 
+            and generic versions of both 32-bit and 64-bit IA machines.</p>
+<p>scripts     -   Contains scripts used to set up the environment, development tools,
+            and tools to flash the generated images on the target.</p>
+<p>LICENSE     -   The license under which Poky is distributed (a mix of GPLv2 and MIT).</p>
+<hr>
+<h2 id="build-dir">Build Dir<a class="headerlink" href="#build-dir" title="Permanent link">¶</a></h2>
+<h3 id="conf">Conf<a class="headerlink" href="#conf" title="Permanent link">¶</a></h3>
+<h4 id="bblayers-conf-guide">Bblayers Conf Guide<a class="headerlink" href="#bblayers-conf-guide" title="Permanent link">¶</a></h4>
+<p>bblayers.conf</p>
+<p>The bblayers.conf file tells BitBake what layers you want considered during the build.</p>
+<p>By default, the layers listed in this file include layers minimally needed by the build system</p>
+<p>However, you must manually add any custom layers you have created</p>
+<p>E.g: BBLAYERS = "\
+                                  /home/linuxtrainer/poky/meta \
+                                 /home/linuxtrainer/poky/meta-poky \
+                                 /home/linuxtrainer/poky/meta-yocto-bsp \
+                                 /home/linuxtrainer/poky/meta-mylayer \
+                                 "
+This example enables four layers, one of which is a custom user defined layer named "meta-mylayer"</p>
+<h4 id="bitbake-threading-config">Bitbake Threading Config<a class="headerlink" href="#bitbake-threading-config" title="Permanent link">¶</a></h4>
+<p>BB_NUMBER_THREADS</p>
+<pre class="highlight"><code>Determines the number of tasks that Bitbake will perform in parallel
+Note: These tasks are related to bitbake and nothing related to compiling
+Defaults to the number of CPUs on the system
+$ bitbake -e core-image-minimal | grep ^BB_NUMBER_THREADS=</code></pre>
+<p>PARALLEL_MAKE</p>
+<pre class="highlight"><code>Corresponds to the -j make option
+specifies the number of processes that GNU make can run in parallel on a compilation task
+Defaults to the number of CPUs on the system
+$ bitbake -e core-image-minimal | grep ^PARALLEL_MAKE=</code></pre>
+<h4 id="local-conf-guide">Local Conf Guide<a class="headerlink" href="#local-conf-guide" title="Permanent link">¶</a></h4>
+<p>conf</p>
+<p>When you run source poky/oe-init-build-env, it will create a "build" folder in that directory
+Inside this build folder, it will create "conf" folder which contains two files:</p>
+<ol>
+<li>local.conf</li>
+<li>bblayers.conf</li>
+</ol>
+<p>local.conf</p>
+<p>Configures almost every aspect of the build system
+Contains local user settings</p>
+<p>MACHINE: The machine the target is built for
+    Eg: MACHINE = "qemux86-64"</p>
+<p>DL_DIR: Where to place downloads
+    During a first build the system will download many different source code tarballs,from various 
+    upstream projects.These are all stored in DL_DIR
+    The default is a downloads directory under TOPDIR which is the build directory</p>
+<p>TMP_DIR:  Where to place the build output
+      This option specifies where the bulk of the building work should be done and
+      where BitBake should place its temporary files(source extraction, compilation) and output</p>
+<p>Important Point:</p>
+<p>local.conf file is a very convenient way to override several default configurations over all the Yocto Project's tools.</p>
+<p>Essentially, we can change or set any variable, for example, add additional packages to an image file</p>
+<p>Though it is convenient, it should be considered as a temporary change as the build/conf/local.conf file is not usually tracked by any source code management system.</p>
+<h4 id="question">Question<a class="headerlink" href="#question" title="Permanent link">¶</a></h4>
+<p>Where should i place the content of conf/local.conf as this file is part of build folder?</p>
+<h4 id="answer">Answer<a class="headerlink" href="#answer" title="Permanent link">¶</a></h4>
+<p>Where should i place the content of conf/local.conf as this file is part of build folder?</p>
+<p>In general, everything in your local.conf should be moved to your own distro configuration</p>
+<p>Finally, you should only set DISTRO to your own distro in local.conf</p>
+<h3 id="others">Others<a class="headerlink" href="#others" title="Permanent link">¶</a></h3>
+<p>Other directories</p>
+<p>downloads   -   downloaded upstream tarballs/git repositories of the recipes used in the build</p>
+<p>sstate-cache    -   shared state cache</p>
+<p>tmp     -   Holds all the build system output</p>
+<pre class="highlight"><code>        tmp/deploy/images/machine - Images are present here</code></pre>
+<p>cache       -   cache used by the bitbake's parser</p>
+<hr>
+<h2 id="build-workflow">Build Workflow<a class="headerlink" href="#build-workflow" title="Permanent link">¶</a></h2>
+<p>Yocto/OpenEmbedded Build System Workflow</p>
+<ol>
+<li>
+<p>Developers specify architecture, policies, patches and configuration details.</p>
+</li>
+<li>
+<p>The build system fetches and downloads the source code from the specified location
+    supports downloading tarballs and source code repositories systems such as git/svn</p>
+</li>
+<li>
+<p>extracts the sources into a local work area</p>
+</li>
+<li>
+<p>patches are applied</p>
+</li>
+<li>
+<p>steps for configuring and compiling the software are run</p>
+</li>
+<li>
+<p>installs the software into a temporary staging area
+    depending on the user configuration, deb/rpm/ipk binaries are generated</p>
+</li>
+<li>
+<p>the build system generates a binary package feed that is used to create the final root file image.</p>
+</li>
+<li>
+<p>finally generates the file system image and a customized Extensible SDK (eSDK) for application development in parallel</p>
+</li>
+</ol>
+<p><img alt="YP-flow-diagram.png" src="day02_yocto_terminology_and_build_dir/3_build_workflow/YP-flow-diagram.png"></p>
+<hr>
+<h2 id="images">Images<a class="headerlink" href="#images" title="Permanent link">¶</a></h2>
+<p>Images generated by Poky Build</p>
+<p>The build process writes images out to the Build Directory inside the tmp/deploy/images/machine/ folder</p>
+<ol>
+<li>
+<p>kernel-image: 
+        A kernel binary file
+        The KERNEL_IMAGETYPE variable determines the naming scheme for the kernel image file.
+        $ bitbake -e core-image-minimal | grep ^KERNEL_IMAGETYPE=</p>
+</li>
+<li>
+<p>root-filesystem-image: 
+        Root filesystems for the target device (e.g. *.ext3 or *.bz2 files).
+        The IMAGE_FSTYPES variable determines the root filesystem image type
+        $ bitbake -e core-image-minimal | grep ^IMAGE_FSTYPES=</p>
+</li>
+<li>
+<p>kernel-modules:
+        Tarballs that contain all the modules built for the kernel</p>
+</li>
+<li>
+<p>bootloaders:
+        If applicable to the target machine, bootloaders supporting the image.</p>
+</li>
+</ol>
+<p>symlinks
+    symbolic link pointing to the most recently built file for each machine
+    These links might be useful for external scripts that need to obtain  latest version of each file</p>
+<hr>
+<h2 id="savedisk-space">Savedisk Space<a class="headerlink" href="#savedisk-space" title="Permanent link">¶</a></h2>
+<p>Saving Disk Space while building Yocto </p>
+<p>Yocto Build System can take a lot of disk space during build. But bitbake provides options to preserve disk space</p>
+<p>You can tell bitbake to delete all the source code, build files after building a particular recipe by adding the following line in local.conf file</p>
+<p>INHERIT += "rm_work"</p>
+<p>Disadvantage: Difficult to debug while build fails of any recipe.</p>
+<p>For example, if you want to exclude bitbake deleting source code of a particular package, you can add it in RM_WORK_EXCLUDE += "recipe-name"</p>
+<p>E.g: RM_WORK_EXCLUDE += "core-image-minimal"</p>
+<hr>
+<h2 id="challenge">Challenge<a class="headerlink" href="#challenge" title="Permanent link">¶</a></h2>
+<p>What is the difference between ipkg/deb/rpm etc?</p></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

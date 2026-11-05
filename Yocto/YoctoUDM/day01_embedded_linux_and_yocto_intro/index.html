@@ -1,0 +1,1664 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Personal offline documentation">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+      
+        <link rel="prev" href="../../../Principle/Principle/">
+      
+      
+        <link rel="next" href="../day02_yocto_terminology_and_build_dir/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Day 01 — Embedded Linux and Yocto Introduction - My Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#day-01-embedded-linux-and-yocto-introduction" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="My Docs" class="md-header__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Day 01 — Embedded Linux and Yocto Introduction
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="My Docs" class="md-nav__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    My Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../template/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Template
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Principle
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Principle
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Principle/foundation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    foundation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Principle/Principle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Principle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Yocto UDM
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Yocto UDM
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 01 — Embedded Linux and Yocto Introduction
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 01 — Embedded Linux and Yocto Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#four-embedded-linux-elements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Four Embedded Linux Elements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#yocto-terminology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Yocto Terminology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#yocto-project-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Yocto Project Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Yocto Project Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#yocto-project-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Yocto Project History
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#yocto-advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Yocto Advantages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#yocto-input-output-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Yocto Input Output Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-machine-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build Machine Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poky-reference-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poky Reference Distribution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metadata-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metadata Definition
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openembedded-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Openembedded Core
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bitbake-build-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bitbake Build System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#meta-yocto-bsp-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta Yocto Bsp Machines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poky-structure-conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poky Structure Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#yocto-workflow-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Yocto Workflow Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qemu-emulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qemu Emulation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arm-image-qemu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arm Image Qemu
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package Installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-image-sato" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Image Sato
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#challenge-qemu-mips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Challenge Qemu Mips
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Challenge Qemu Mips">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Challenge
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day02_yocto_terminology_and_build_dir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 02 — Yocto Terminology and Build Directory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day03_beaglebone_black_and_booting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 03 — BeagleBone Black and Booting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day04_yocto_releases_and_meta_ti/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 04 — Yocto Releases and meta-ti BSP Layer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day05_raspberry_pi_support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 05 — Raspberry Pi Support
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day06_bitbake_operators_and_layers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 06 — BitBake Operators and Layer Creation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day07_image_customization_and_features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 07 — Image Customization and Features
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day08_recipe_fundamentals_and_c/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 08 — Recipe Fundamentals and C Programming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day09_build_logs_and_advanced_recipes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 09 — Build Logs and Advanced Recipes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../day10_git_integration_in_recipes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 10 — Git Integration in Recipes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    bootlin
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    bootlin
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bootlin/source/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    source - bootlin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#four-embedded-linux-elements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Four Embedded Linux Elements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#yocto-terminology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Yocto Terminology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#yocto-project-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Yocto Project Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Yocto Project Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#yocto-project-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Yocto Project History
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#yocto-advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Yocto Advantages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#yocto-input-output-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Yocto Input Output Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-machine-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build Machine Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poky-reference-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poky Reference Distribution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metadata-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metadata Definition
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openembedded-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Openembedded Core
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bitbake-build-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bitbake Build System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#meta-yocto-bsp-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta Yocto Bsp Machines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poky-structure-conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poky Structure Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#yocto-workflow-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Yocto Workflow Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qemu-emulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qemu Emulation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arm-image-qemu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arm Image Qemu
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package Installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-image-sato" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Image Sato
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#challenge-qemu-mips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Challenge Qemu Mips
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Challenge Qemu Mips">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Challenge
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<div><h1 id="day-01-embedded-linux-and-yocto-introduction">Day 01 — Embedded Linux and Yocto Introduction<a class="headerlink" href="#day-01-embedded-linux-and-yocto-introduction" title="Permanent link">¶</a></h1>
+<h2 id="four-embedded-linux-elements">Four Embedded Linux Elements<a class="headerlink" href="#four-embedded-linux-elements" title="Permanent link">¶</a></h2>
+<p>Toolchain: The compiler and other tools needed to create code for your target device. Everything else depends on the toolchain.</p>
+<p>Bootloader: The program that initializes the board and loads the Linux kernel.</p>
+<p>Kernel: This is the heart of the system, managing system resources and interfacing with hardware.</p>
+<p>Root filesystem: Contains the libraries and programs that are run once the kernel has completed its initialization.</p>
+<p>One more element can be collection of programs specific to your embedded application which make the device do whatever it is supposed to do, be it weigh groceries, display movies, control a robot, or fly a drone.</p>
+<h2 id="yocto-terminology">Yocto Terminology<a class="headerlink" href="#yocto-terminology" title="Permanent link">¶</a></h2>
+<p>What is Yocto?</p>
+<p>Yocto is the smallest SI metric system prefix</p>
+<p>Like 'm' stands for milli ( 10^-3 ).</p>
+<p>So is yocto ( y = 10^-24 )</p>
+<h2 id="yocto-project-overview">Yocto Project Overview<a class="headerlink" href="#yocto-project-overview" title="Permanent link">¶</a></h2>
+<p>What is Yocto Project
+Yocto project provides open source, high quality infrastructure and tools to help developers create their own custom Linux distributions for any hardware architecture.</p>
+<p>History
+Founded in 2010,  in an effort to reduce work duplication, provide resources and information catering to both new and experienced users.</p>
+<p>collaboration of
+    many hardware manufacturers
+    open source operating systems vendors and
+    electronics companies</p>
+<p>Yocto is also a project working group of the Linux Foundation</p>
+<h3 id="yocto-project-history">Yocto Project History<a class="headerlink" href="#yocto-project-history" title="Permanent link">¶</a></h3>
+<p>Advantages of Yocto Project</p>
+<ol>
+<li>
+<p>Widely Adopted Across the Industry
+    Semiconductor, operating system, software, and service vendors exist whose products and services adopt and support the Yocto Project.
+    Eg. Intel, Facebook, arm, Juniper Networks, LG, AMD, NXP, DELL</p>
+</li>
+<li>
+<p>Architecture Agnostic
+    supports Intel, ARM, MIPS, AMD, PPC and other architectures
+    chip vendors create and supply BSPs that support their hardware
+    if you have custom silicon, you can create a BSP that supports that architecture
+    the Yocto Project fully supports a wide range of device emulation through the Quick EMUlator (QEMU)</p>
+</li>
+<li>
+<p>Images and Code Transfer Easily
+    Yocto Project output can easily move between architectures without moving to new development environments.</p>
+</li>
+<li>
+<p>Flexibility
+    Through customization and layering, a project group can leverage the base Linux distribution to create a distribution that works for their product needs.</p>
+</li>
+<li>
+<p>Ideal for Constrained Embedded and IoT devices
+    Unlike a full Linux distribution, you can use the Yocto Project to create exactly what you need for embedded devices
+    You only add the feature support or packages that you absolutely need for the device</p>
+</li>
+<li>
+<p>Uses a Layer Model
+    The Yocto Project layer infrastructure groups related functionality into separate bundles.
+    You can incrementally add these grouped functionalities to your project as needed
+    Allows you to easily extend the system, make customizations, and keep functionality organized.</p>
+</li>
+</ol>
+<hr>
+<h2 id="yocto-advantages">Yocto Advantages<a class="headerlink" href="#yocto-advantages" title="Permanent link">¶</a></h2>
+<p>What is Yocto Project</p>
+<p>To understand the outcome provided by the Yocto Project, we can use the analogy of the computing machine</p>
+<p>Input: Set of data that describes what we want, that is our specification 
+        (Kernel Configuration, Hardware Name, Packages/Binaries to be installed)</p>
+<p>Output: Linux Based Embedded Product 
+        (Linux Kernel, Root File System, Bootloader, Device Tree, Toolchain)</p>
+<hr>
+<h2 id="yocto-input-output-model">Yocto Input Output Model<a class="headerlink" href="#yocto-input-output-model" title="Permanent link">¶</a></h2>
+<p>Setting up Build Machine</p>
+<p>Prerequisites</p>
+<ol>
+<li>
+<p>50 Gbytes of free disk space</p>
+</li>
+<li>
+<p>Runs a supported Linux distribution (i.e. recent releases of Fedora, openSUSE, CentOS, Debian, or Ubuntu). </p>
+</li>
+<li>
+<pre class="highlight"><code>Git 1.8.3.1 or greater</code></pre>
+<p>tar 1.27 or greater</p>
+<p>Python 3.4.0 or greater.</p>
+</li>
+</ol>
+<p>Packages and package installation vary depending on your development system.</p>
+<p>(*) Install the required packages for Yocto to Work from
+        https://www.yoctoproject.org/docs/latest/ref-manual/ref-manual.html#ubuntu-packages</p>
+<p>$ sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib \
+    build-essential chrpath socat cpio python python3 python3-pip python3-pexpect \
+    xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev \
+    pylint3 xterm</p>
+<p>sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib \
+    build-essential chrpath socat cpio python3 python3-pip python3-pexpect \
+    xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev \
+    pylint3 xterm</p>
+<h2 id="build-machine-setup">Build Machine Setup<a class="headerlink" href="#build-machine-setup" title="Permanent link">¶</a></h2>
+<p>Poky</p>
+<p>Poky is a reference distribution of Yocto Project. The word "reference" is used to mean "example" in this context.</p>
+<p>Yocto Project uses Poky to build images (kernel, system, and application software) for targeted hardware.</p>
+<p>At the technical level it is a combined repository of the components
+    • Bitbake
+    • OpenEmbedded Core
+    • meta-yocto-bsp
+    • Documentation</p>
+<p>Note: Poky does not contain binary files,it is a working example of how to build your own custom Linux distribution from source.</p>
+<p>What is difference between poky and Yocto</p>
+<p>The exact difference between Yocto and Poky is Yocto refers to the organization ( like one would refer to 'canonical', the company behind Ubuntu ), and Poky refers to the actual bits downloaded ( analogous to 'Ubuntu' )</p>
+<hr>
+<h2 id="poky-reference-distribution">Poky Reference Distribution<a class="headerlink" href="#poky-reference-distribution" title="Permanent link">¶</a></h2>
+<p>Metadata </p>
+<p>Non Yocto:  A set of data that describes and gives information about other data</p>
+<p>Yocto World: 
+    Metadata refers to the build instructions
+    Commands and data used to indicate what versions of software are used
+    Where they are obtained from
+    Changes or additions to the software itself ( patches ) which are used to fix bugs or customize the software for use in a particular situation</p>
+<p>Metadata is collection of
+    • Configuration files (.conf)
+    • Recipes (.bb and .bbappend)
+    • Classes (.bbclass)
+    • Includes (.inc)</p>
+<hr>
+<h2 id="metadata-definition">Metadata Definition<a class="headerlink" href="#metadata-definition" title="Permanent link">¶</a></h2>
+<p>OpenEmbedded Project</p>
+<p>From http://www.openembedded.org/wiki/Main_Page</p>
+<p>OpenEmbedded offers a best-in-class cross-compile environment. It allows developers to create a complete Linux Distribution for embedded systems.</p>
+<p>What is the difference between OpenEmbedded and the Yocto Project?</p>
+<p>The Yocto Project and OpenEmbedded share a core collection of metadata called openembedded-core. </p>
+<p>However, the two organizations remain separate, each with its own focus</p>
+<p>OpenEmbedded provides a comprehensive set of metadata for a wide variety of architectures, features, and applications</p>
+<pre class="highlight"><code>Not a reference distribution
+Designed to be the foundation for others</code></pre>
+<p>The Yocto Project focuses on providing powerful, easy-to-use, interoperable, well-tested tools, metadata, and board support packages (BSPs) for a core set of architectures and specific boards.</p>
+<p>OpenEmbedded-Core(oe-core)</p>
+<p>The Yocto Project and OpenEmbedded have agreed to work together and share a common core set of metadata(recipes, classes and associated files): oe-core</p>
+<hr>
+<h2 id="openembedded-core">Openembedded Core<a class="headerlink" href="#openembedded-core" title="Permanent link">¶</a></h2>
+<p>Bitbake</p>
+<p>Bitbake is a core component of the Yocto Project.</p>
+<p>It basically performs the same functionality as of make.</p>
+<p>It's a task scheduler that parses python and shell script mixed code</p>
+<p>The code parsed generates and runs tasks, which are basically a set of steps ordered according to code's dependencies.</p>
+<p>It reads recipes and follows them by fetching packages, building them and incorporating the results into bootable images.</p>
+<p>It keeps track of all tasks being processed in order to ensure completion, maximizing the use of processing resources to reduce build time and being predictable.</p>
+<hr>
+<h2 id="bitbake-build-system">Bitbake Build System<a class="headerlink" href="#bitbake-build-system" title="Permanent link">¶</a></h2>
+<p>meta-yocto-bsp</p>
+<p>A Board Support Package (BSP) is a collection of information that defines how to support a particular hardware device, set of devices, or hardware platform</p>
+<p>The BSP includes information about the hardware features present on the device and kernel configuration information along with any additional hardware drivers required.</p>
+<p>The BSP also lists any additional software components required in addition to a generic Linux software stack for both essential and optional platform features.</p>
+<p>The meta-yocto-bsp layer in Poky maintains several BSPs such as the Beaglebone, EdgeRouter, and generic versions of both 32-bit and 64-bit IA machines.</p>
+<p>Machines supported
+Texas Instruments BeagleBone (beaglebone)
+Freescale MPC8315E-RDB (mpc8315e-rdb)
+Intel x86-based PCs and devices (genericx86 and genericx86-64)
+Ubiquiti Networks EdgeRouter Lite (edgerouter)</p>
+<p>Note: To develop on different hardware, you will need to complement Poky with hardware-specific Yocto layers.</p>
+<hr>
+<h2 id="meta-yocto-bsp-machines">Meta Yocto Bsp Machines<a class="headerlink" href="#meta-yocto-bsp-machines" title="Permanent link">¶</a></h2>
+<p>Others</p>
+<p>meta-poky, which is Poky-specific metadata</p>
+<p>Documentation, which contains the Yocto Project source files used to make the set of user manuals.</p>
+<p>Conclusion</p>
+<p>Poky includes 
+    some OE components(oe-core)
+    bitbake
+    demo-BSP's
+    helper scripts to setup environment
+    emulator QEMU to test the image</p>
+<p><img alt="poky-reference-distribution.png" src="day01_embedded_linux_and_yocto_intro/10_meta_yocto_bsp_machines/poky-reference-distribution.png"></p>
+<hr>
+<h2 id="poky-structure-conclusion">Poky Structure Conclusion<a class="headerlink" href="#poky-structure-conclusion" title="Permanent link">¶</a></h2>
+<p>Workflow of Yocto Project</p>
+<p>Step 1: Download the Poky Source code</p>
+<p>$ git clone git://git.yoctoproject.org/poky</p>
+<p>Step 2: Checkout the latest branch/release (zeus)</p>
+<p>$ git checkout zeus </p>
+<p>Step 3: Prepare the build environment</p>
+<p>Poky provides you a script 'oe-init-build-env', which should be used to setup the build environment</p>
+<p>script will set up your environment to use Yocto build system,including adding the BitBake utility to your path</p>
+<p>$ source poky/oe-init-build-env [ build_directory ]</p>
+<p>Here build_directory is an optional argument for the name of the directory where the environment is set</p>
+<p>in case it is not given , it defaults to "build"</p>
+<p>The above script will move you in a build folder and create two files ( local.conf, bblayers.conf ) inside conf folder</p>
+<p>Step 4: Building Linux Distribution</p>
+<p>$ bitbake <image_name>
+$ time bitbake core-image-minimal</image_name></p>
+<p>core-image-minimal</p>
+<p>This is a small image allowing a device to boot, and it is very useful for kernel and boot loader tests and development</p>
+<hr>
+<h2 id="yocto-workflow-steps">Yocto Workflow Steps<a class="headerlink" href="#yocto-workflow-steps" title="Permanent link">¶</a></h2>
+<p>Command to run the generated image in QEMU</p>
+<p>Quick Emulator ( QEMU ) is a free and open source software package that performs hardware virtualization.</p>
+<p>The QEMU based machines allow test and development without real hardware.</p>
+<p>Currently emulations are supported for:
+        • ARM
+        • MIPS
+        • MIPS64
+        • PowerPC
+        • X86
+        • X86_64</p>
+<p>Poky provides a script 'runqemu' which will allow you to start the QEMU using yocto generated images.</p>
+<p>The runqemu script is run as:</p>
+<p>runqemu <machine> <zimage> <filesystem></filesystem></zimage></machine></p>
+<p>where:</p>
+<p><machine> is the machine/architecture to use (qemuarm/qemumips/qemuppc/qemux86/qemux86-64)
+   <zimage> is the path to a kernel (e.g. zimage-qemuarm.bin)
+   <filesystem> is the path to an ext2 image (e.g. filesystem-qemuarm.ext2) or an nfs directory</filesystem></zimage></machine></p>
+<p>Full usage instructions can be seen by running the command with no options specified.</p>
+<p>Exit QEMU</p>
+<p>Exit QEMU by either clicking on the shutdown icon or by typing Ctrl-C in the QEMU transcript window from which you evoked QEMU.</p>
+<hr>
+<h2 id="qemu-emulation">Qemu Emulation<a class="headerlink" href="#qemu-emulation" title="Permanent link">¶</a></h2>
+<p>Steps to generate ARM image and run in QEMU</p>
+<p>When you set up the build environment, a local configuration file named local.conf becomes available in a conf subdirectory of the Build Directory</p>
+<p>The defaults are set to build for a qemux86-64 target</p>
+<p>Edit ./build/conf/local.conf</p>
+<p>Set</p>
+<p>MACHINE = "qemuarm"</p>
+<p>$ source poky/oe-init-build-env</p>
+<p>$ bitbake core-image-minimal</p>
+<p>$ runqemu core-image-minimal</p>
+<hr>
+<h2 id="arm-image-qemu">Arm Image Qemu<a class="headerlink" href="#arm-image-qemu" title="Permanent link">¶</a></h2>
+<p>Nographic</p>
+<p>You can launch QEMU without the graphic window by adding nographic to the command line</p>
+<p>$ runqemu qemuarm nographic</p>
+<hr>
+<h2 id="package-installation">Package Installation<a class="headerlink" href="#package-installation" title="Permanent link">¶</a></h2>
+<p>To add a particular package in your root file system</p>
+<p>Open your local.conf file and add the recipe name below</p>
+<p>IMAGE_INSTALL += "recipe-name"</p>
+<p>E.g. IMAGE_INSTALL += "usbutils" for lsusb</p>
+<p>or IMAGE_INSTALL_append = " usbutils"</p>
+<hr>
+<h2 id="core-image-sato">Core Image Sato<a class="headerlink" href="#core-image-sato" title="Permanent link">¶</a></h2>
+<p>core-image-sato</p>
+<p>This is the X11 Window-system-based image with a SATO theme and a GNOME mobile desktop environment</p>
+<p>$ bitbake core-image-sato</p>
+<hr>
+<h2 id="challenge-qemu-mips">Challenge Qemu Mips<a class="headerlink" href="#challenge-qemu-mips" title="Permanent link">¶</a></h2>
+<h3 id="challenge">Challenge<a class="headerlink" href="#challenge" title="Permanent link">¶</a></h3>
+<p>Challenge</p>
+<p>What changes you make to generate an image for qemu mips?</p>
+<p>Once generated run the image in qemu emulator</p>
+<hr></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
